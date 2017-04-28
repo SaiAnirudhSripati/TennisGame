@@ -6,7 +6,7 @@
 //variable declaration
 var canvas;
 var canvasContext;
-var ballX=0;
+var ballX=50;
 //Execute the code inside the function after finishing loading the page
   window.onload=function(){
     canvas=document.getElementById('gameArea');
@@ -16,16 +16,17 @@ var ballX=0;
     //co-ordninates start from 0px left and 0px top
     canvasContext.fillRect(0,0,canvas.width,canvas.height);
     //call drawEverything every 1000ms
-    setInterval(drawEverything,1000);
+    var fps=30;
+    setInterval(drawEverything,1000/fps);
 
   }
   function drawEverything(){
-    ballX=ballX+10;
+    ballX=ballX+5;
     canvasContext.fillStyle='black';
     canvasContext.fillRect(0,0,canvas.width,canvas.height);
 
     canvasContext.fillStyle='Red';
-    canvasContext.fillRect(ballX,200,10,25);
+    canvasContext.fillRect(ballX,100,10,10);
 
   }
 </script>
