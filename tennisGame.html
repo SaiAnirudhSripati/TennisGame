@@ -17,11 +17,17 @@ var ballX=50;
     canvasContext.fillRect(0,0,canvas.width,canvas.height);
     //call drawEverything every 1000ms
     var fps=30;
-    setInterval(drawEverything,1000/fps);
+    setInterval(function(){
+      moveEverything();
+      drawEverything();
+    },1000/fps);
+
+  }
+  function moveEverything(){
+    ballX=ballX+5;
 
   }
   function drawEverything(){
-    ballX=ballX+5;
     canvasContext.fillStyle='black';
     canvasContext.fillRect(0,0,canvas.width,canvas.height);
 
