@@ -1,0 +1,30 @@
+<html>
+<canvas id='gameArea' width='800' height='600'>
+
+</canvas>
+<script>
+//variable declaration
+var canvas;
+var canvasContext;
+var barX=0;
+//Execute the code inside the function after finishing loading the page
+  window.onload=function(){
+    canvas=document.getElementById('gameArea');
+    canvasContext=canvas.getContext('2d');
+    canvasContext.fillStyle='black';
+    //draw a rect starting from from the co-ordintaes 0,0 of width and height that of the canvas
+    //co-ordninates start from 0px left and 0px top
+    canvasContext.fillRect(0,0,canvas.width,canvas.height);
+    //call drawEverything every 1000ms
+    setInterval(drawEverything,1000);
+
+  }
+  function drawEverything(){
+    barX=ballX+10;
+    canvasContext.fillStyle='Red';
+    canvasContext.fillRect(ballX,200,10,25);
+
+  }
+</script>
+
+</html>
