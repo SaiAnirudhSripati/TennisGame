@@ -10,6 +10,7 @@ var ballX=50;
 var ballSpeedX=5;
 //Execute the code inside the function after finishing loading the page
   window.onload=function(){
+    var fps=30;
     canvas=document.getElementById('gameArea');
     canvasContext=canvas.getContext('2d');
     canvasContext.fillStyle='black';
@@ -17,7 +18,6 @@ var ballSpeedX=5;
     //co-ordninates start from 0px left and 0px top
     canvasContext.fillRect(0,0,canvas.width,canvas.height);
     //call drawEverything every 1000ms
-    var fps=30;
     setInterval(function(){
       moveEverything();
       drawEverything();
@@ -25,21 +25,27 @@ var ballSpeedX=5;
 
   }
   function moveEverything(){
-    ballX=ballX+ballSpeedX;
-    if(ballX > canvas.width){
-      ballSpeedX=-ballSpeedX;
+          ballX=ballX+ballSpeedX;
+          if(ballX > canvas.width){
+                ballSpeedX=-ballSpeedX;
+          }else if (ballX <0){
+            ballSpeedX=-ballSpeedX;
+
     }
 
   }
   function drawEverything(){
-    canvasContext.fillStyle='black';
-    canvasContext.fillRect(0,0,canvas.width,canvas.height);
 
-    canvasContext.fillStyle='white';
-    canvasContext.fillRect(5,210,10,100);
-
-    canvasContext.fillStyle='Red';
-    canvasContext.fillRect(ballX,100,10,10);
+//draw canvas
+colourdRect(0,0,canvas.width,canvas.height,'black');
+  //draw paddle
+colourdRect(5,210,10,100,'white');
+//draw ball
+colourdRect(ballX,100,10,10,'Red');
+  }
+  function colourdRect(leftX,topY,width,height,colour){
+    canvasContext.fillStyle=colour;
+    canvasContext.fillRect(leftX,topY,width,height);
 
   }
 </script>
