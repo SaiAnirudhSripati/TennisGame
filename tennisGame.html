@@ -7,6 +7,7 @@
 var canvas;
 var canvasContext;
 var ballX=50;
+var ballSpeedX=5;
 //Execute the code inside the function after finishing loading the page
   window.onload=function(){
     canvas=document.getElementById('gameArea');
@@ -24,7 +25,10 @@ var ballX=50;
 
   }
   function moveEverything(){
-    ballX=ballX+5;
+    ballX=ballX+ballSpeedX;
+    if(ballX > canvas.width){
+      ballSpeedX=-ballSpeedX;
+    }
 
   }
   function drawEverything(){
