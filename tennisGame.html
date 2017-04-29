@@ -11,7 +11,10 @@ var ballY=50;
 var ballSpeedX=10;
 var ballSpeedY=2;
 var paddle1Y=250;
-const paddleHeight=100;
+var paddle2Y=250;
+
+const PADDLE_HEIGHT=100;
+const PADDLE_WIDTH=10;
 
 //Execute the code inside the function after finishing loading the page
   window.onload=function(){
@@ -21,7 +24,7 @@ const paddleHeight=100;
     canvasContext.fillStyle='black';
     canvas.addEventListener('mousemove',function(evt){
       var mousePos=getMousePos(evt);
-      paddle1Y=mousePos.y-(paddleHeight/2);
+      paddle1Y=mousePos.y-(PADDLE_HEIGHT/2);
     });
     //draw a rect starting from from the co-ordintaes 0,0 of width and height that of the canvas
     //co-ordninates start from 0px left and 0px top
@@ -50,14 +53,36 @@ var mouseY=evt.clientY-rect.top-root.scrollTop;
       y:mouseY
     } ;
   }
+  function computerMovement(){
+    var paddle2Ycenter=paddle2Y+(PADDLE_HEIGHT/2)
+    if(paddle2Ycenter<ballY -35){
+
+
+      paddle2Y+=6;
+    }else if(paddle2Ycenter>ballY+35) {
+      paddle2Y-=6;
+
+    }
+  }
   function moveEverything(){
+    computerMovement();
           ballX=ballX+ballSpeedX;
             ballY=ballY+ballSpeedY;
           if(ballX > canvas.width){
+              //  ballSpeedX=-ballSpeedX;
+              if(ballY>paddle2Y && ballY<paddle2Y+PADDLE_HEIGHT){
                 ballSpeedX=-ballSpeedX;
+              }else{
+                 ballReset();
+               }
           }if (ballX <0){
-            ballReset();
+            if(ballY>paddle1Y && ballY<paddle1Y+PADDLE_HEIGHT){
+              ballSpeedX=-ballSpeedX;
+            }else{
+               ballReset();
+             }
             //ballSpeedX=-ballSpeedX;
+
 
           }
           if(ballY > canvas.height){
@@ -79,7 +104,9 @@ var mouseY=evt.clientY-rect.top-root.scrollTop;
 //draw canvas
 colourdRect(0,0,canvas.width,canvas.height,'black');
   //draw paddle
-colourdRect(5,paddle1Y,10,paddleHeight,'white');
+colourdRect(5,paddle1Y,PADDLE_WIDTH,PADDLE_HEIGHT,'white');
+colourdRect(canvas.width-PADDLE_WIDTH,paddle2Y,PADDLE_WIDTH,PADDLE_HEIGHT,'white');
+
 //draw ball
 //colourdRect(ballX,100,10,10,'Red');
 drawCircle('white',ballX,ballY,10,0,Math.PI*2,true);
