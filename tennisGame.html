@@ -41,7 +41,18 @@ colourdRect(0,0,canvas.width,canvas.height,'black');
   //draw paddle
 colourdRect(5,210,10,100,'white');
 //draw ball
-colourdRect(ballX,100,10,10,'Red');
+//colourdRect(ballX,100,10,10,'Red');
+drawCircle('white',ballX,100,10,0,Math.PI*2,true);
+  }
+  function drawCircle(color,xCord,yCord,radius,startAngle,radians,drawDirection){
+    canvasContext.fillStyle=color;
+    canvasContext.beginPath();
+    //x,y from center of the cirlce,radius of the circle
+    //The param Math.PI*2 takes the radius 10 and fills it around it
+    //it 360 times as 2*pi =360
+    canvasContext.arc(xCord,yCord,radius,startAngle,radians,drawDirection);
+    canvasContext.fill();
+
   }
   function colourdRect(leftX,topY,width,height,colour){
     canvasContext.fillStyle=colour;
