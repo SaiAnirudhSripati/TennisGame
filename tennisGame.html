@@ -7,13 +7,22 @@
 var canvas;
 var canvasContext;
 var ballX=50;
-var ballSpeedX=5;
+var ballY=50;
+var ballSpeedX=10;
+var ballSpeedY=2;
+var paddle1Y=250;
+const paddleHeight=100;
+
 //Execute the code inside the function after finishing loading the page
   window.onload=function(){
-    var fps=30;
+    var fps=60;
     canvas=document.getElementById('gameArea');
     canvasContext=canvas.getContext('2d');
     canvasContext.fillStyle='black';
+    canvas.addEventListener('mousemove',function(evt){
+      var mousePos=getMousePos(evt);
+      paddle1Y=mousePos.y-(paddleHeight/2);
+    });
     //draw a rect starting from from the co-ordintaes 0,0 of width and height that of the canvas
     //co-ordninates start from 0px left and 0px top
     canvasContext.fillRect(0,0,canvas.width,canvas.height);
@@ -24,14 +33,45 @@ var ballSpeedX=5;
     },1000/fps);
 
   }
+  function getMousePos(evt){
+//get canvas area
+var rect=canvas.getBoundingClientRect();
+//get documentHandle
+var root=document.documentElement;
+//get xCord of mouse,get location of canvas element from left,
+//get the distance of scroll from left(usefule incase we have scrolled).
+var mouseX=evt.clientX-rect.left-root.scrolLeft;
+//get yCord of mouse,get location of canvas element from top,
+//get the distance of scroll from top(usefule incase we have scrolled).
+var mouseY=evt.clientY-rect.top-root.scrollTop;
+//return assoc
+    return{
+      x:mouseX,
+      y:mouseY
+    } ;
+  }
   function moveEverything(){
           ballX=ballX+ballSpeedX;
+            ballY=ballY+ballSpeedY;
           if(ballX > canvas.width){
                 ballSpeedX=-ballSpeedX;
-          }else if (ballX <0){
-            ballSpeedX=-ballSpeedX;
+          }if (ballX <0){
+            ballReset();
+            //ballSpeedX=-ballSpeedX;
+
+          }
+          if(ballY > canvas.height){
+                ballSpeedY=-ballSpeedY;
+          }if (ballY <0){
+            ballSpeedY=-ballSpeedY;
 
     }
+
+  }
+  function ballReset(){
+    ballSpeedX=-ballSpeedX;
+    ballX=canvas.width/2;
+    ballY=canvas.height/2;
 
   }
   function drawEverything(){
@@ -39,18 +79,20 @@ var ballSpeedX=5;
 //draw canvas
 colourdRect(0,0,canvas.width,canvas.height,'black');
   //draw paddle
-colourdRect(5,210,10,100,'white');
+colourdRect(5,paddle1Y,10,paddleHeight,'white');
 //draw ball
 //colourdRect(ballX,100,10,10,'Red');
-drawCircle('white',ballX,100,10,0,Math.PI*2,true);
+drawCircle('white',ballX,ballY,10,0,Math.PI*2,true);
   }
-  function drawCircle(color,xCord,yCord,radius,startAngle,radians,drawDirection){
+
+
+  function drawCircle(color,centerX,centerY,radius,startAngle,radians,drawDirection){
     canvasContext.fillStyle=color;
     canvasContext.beginPath();
     //x,y from center of the cirlce,radius of the circle
     //The param Math.PI*2 takes the radius 10 and fills it around it
     //it 360 times as 2*pi =360
-    canvasContext.arc(xCord,yCord,radius,startAngle,radians,drawDirection);
+    canvasContext.arc(centerX,centerY,radius,startAngle,radians,drawDirection);
     canvasContext.fill();
 
   }
